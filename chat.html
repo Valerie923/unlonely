@@ -9,16 +9,24 @@
 </head>
 <body>
     <header>
-        <h1>You're a few seconds away from finding a friend!</h1>
+        <p id = "setInfo">Set 1: Question 1</p>
+        <h2 id = "current_question"></h2>       
+       
     </header>
 
     <main>
-        <div class="spinner"></div>
-        <h2>Finding you someone to talk to...</h2>
-        <p>Good things take a moment...</p>
-        <button id="aiChatBtn">Chat with AI while waiting</button>
-        <a href="chat.html"><button>Begin Conversation (testing only)</button></a>
+        <div id = "chatArea">
+        </div>
+            <div id="inputArea">
+            <input type="text" id="messageInput" placeholder="Type your message here...">
+            <button id="sendBtn">Send</button>
+            </div>
+        <button id="nextBtn" style="display:none">Next Question</button>  
+        <button id = "continueBtn" style = "display:none">Continue to next set</button>
+        <button id = "endBtn" style = "display: none">End Conversation</button>        
     </main>
+   
+
 
 
 
