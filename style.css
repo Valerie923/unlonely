@@ -64,3 +64,40 @@ button {
 button:hover {
     background-color: #5b21b6;
 }
+.spinner {
+    margin: 20px auto;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 5px solid #fbc2eb;
+    border-top: 5px solid #e05f8e;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+#chatArea{
+    border: 5px solid #164476;
+    padding: 10px;
+    height: 350px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+#inputArea {
+    display: flex;
+    gap: 10px;
+}
+#messageInput {
+    flex: 1;
+    padding: 12px;
+    border-radius: 24px;
+    border: none;
+    font-size: 1rem;
+}
+#setInfo {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #1a1a2e;
+    margin-bottom: 10px;
+}
