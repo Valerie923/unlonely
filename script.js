@@ -2,6 +2,13 @@
 let currentSet = 0
 let currentQuestion = 0
 const socket = io();
+socket.on("wait", (message) => {
+    console.log("Server says:" + message);
+});
+socket.on("match", (message) => {
+    console.log("Match update:" + message);
+    alert("Match Found! You can start chatting now.")
+});
 const questions = [
   [
     "Given the choice of anyone in the world, whom would you want as a dinner guest?",

@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
+app.use(express.static(__dirname + '/..'));
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require('socket.io');
@@ -26,6 +27,11 @@ io.on("connection", (socket) => {
         waitingUsers.push(socket);
         io.to(socket.id).emit("wait", "Waiting for a partner");
     };
+    socket.on("message", (msg) => {
+        const rooms = Array.from(socket.rooms).filter(r => r !== socket.id);
+        io.to(rooms[0]).emit("message", msg);
+    });
+
     socket.on("disconnect", () => {
         console.log("user disconnected");
         waitingUsers = waitingUsers.filter(user => user.id !== socket.id);
