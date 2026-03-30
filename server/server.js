@@ -66,16 +66,22 @@ io.on("connection", (socket) => {
         io.to(socket.id).emit("wait", "Waiting for a partner");
     };
     socket.on("message", (msg) => {
-        const rooms = Array.from(socket.rooms).filter(r => r !== socket.id);
+    const rooms = Array.from(socket.rooms).filter(r => r !== socket.id);
+    if (rooms.length > 0) {
         socket.to(rooms[0]).emit("message", msg);
-    });
+    }
+});
 
-    socket.on("disconnect", () => {
-        console.log("user disconnected");
-        waitingUsers = waitingUsers.filter(user => user.id !== socket.id);
-
-
-    });
+   socket.on("disconnect", () => {
+    const rooms = Array.from(socket.rooms).filter(r => r !== socket.id);
+    if (rooms.length > 0) {
+        socket.to(rooms[0]).emit("partner_left");
+    }
+    waitingUsers = waitingUsers.filter(user => user.id !== socket.id);
+});
+socket.on("partner_left", () => {
+    alert("Your partner has left the conversation 😢");
+});
 
     
     });

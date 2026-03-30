@@ -5,6 +5,9 @@ const socket = io();
 socket.on("wait", (message) => {
     console.log("Server says:" + message);
 });
+socket.on("partner_left", () => {
+    alert("Your partner has left the conversation 😢");
+});
 socket.on("match", (message) => {
     console.log("Match update:" + message);
     alert("Match Found! You can start chatting now.")
