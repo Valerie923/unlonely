@@ -45,6 +45,7 @@ You are NOT a counselor. You are just a normal person chatting.
 });
 const express = require('express');
 const app = express();
+app.use(express.json());
 app.use(express.static('/app'));
 app.get('/', (req, res) => {
   res.sendFile('/app/index.html');
