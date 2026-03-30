@@ -1,7 +1,13 @@
+const params = new URLSearchParams(window.location.search);
+const roomName = params.get("room");
 
+const socket = io();
+socket.on("connect", () => {
+    socket.emit("join_room", roomName);
+});
 let currentSet = 0
 let currentQuestion = 0
-const socket = io();
+
 socket.on("wait", (message) => {
     console.log("Server says:" + message);
 });
@@ -75,25 +81,31 @@ function loadQuestion() {
     document.getElementById("setInfo").innerText = `Set ${currentSet + 1}: Question ${currentQuestion + 1} of 6`
 }
 loadQuestion()
-
-function nextQuestion(){
+function advanceQuestion(){
     if (currentQuestion < questions[currentSet].length - 1) {
         currentQuestion++
         loadQuestion()
     } else {
         currentQuestion = 0
         currentSet++
-        
         if (currentSet == 6) {
             window.location.href = "ending.html"
         } else {
-            loadQuestion()
             document.getElementById("nextBtn").style.display = "none"
             document.getElementById("continueBtn").style.display = "block"
             document.getElementById("endBtn").style.display = "block"
         }
     }
 }
+
+function nextQuestion(){
+    advanceQuestion();
+    socket.emit("next_question");
+}
+
+socket.on("next_question", () => {
+    advanceQuestion();
+});
 
 
 document.getElementById("nextBtn").addEventListener("click", nextQuestion)
@@ -119,9 +131,25 @@ document.getElementById("messageInput").addEventListener("keydown", function(e) 
 })
 
 function continueSet() {
+    loadQuestion()
     document.getElementById("nextBtn").style.display = "block"
     document.getElementById("continueBtn").style.display = "none"
     document.getElementById("endBtn").style.display = "none"
+    socket.emit("continue_set")
 }
 
+socket.on("continue_set", () => {
+    loadQuestion()
+    document.getElementById("nextBtn").style.display = "block"
+    document.getElementById("continueBtn").style.display = "none"
+    document.getElementById("endBtn").style.display = "none"
+})
 document.getElementById("continueBtn").addEventListener("click", continueSet)
+document.getElementById("endBtn").addEventListener("click", () => {
+    socket.emit("partner_left")
+    window.location.href = "ending.html"
+})
+socket.on("partner_left", () => {
+    alert("Your partner has left the conversation 😢");
+    window.location.href = "ending.html"
+});
