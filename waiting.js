@@ -1,5 +1,10 @@
 function aiChatbox() {
-    document.getElementById("aiChatArea").style.display = "block"    
+    document.getElementById("aiChatArea").style.display = "block"   
+    const aiMsg = document.createElement("p");
+    aiMsg.classList.add("theirMessage");
+    aiMsg.innerText = "Hey! Looks like you're waiting. What's on your mind today?";
+
+    document.getElementById("aiMessages").appendChild(aiMsg); 
 }
 
 document.getElementById("aiChatBtn").addEventListener("click", aiChatbox)
@@ -17,3 +22,8 @@ function aisendMessage(){
     }
 };
 document.getElementById("aiSendBtn").addEventListener("click", aisendMessage)
+document.getElementById("aiInput").addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        aisendMessage();
+    }
+});

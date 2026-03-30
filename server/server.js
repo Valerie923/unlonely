@@ -1,7 +1,37 @@
 require('dotenv').config();
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+let chatSessions = {};
+const model = genAI.getGenerativeModel({ 
+    model: "gemini-1.5-flash",
+    systemInstruction: "You are a warm-up companion for someone about to have a deep conversation with a stranger using the 36 Questions to Fall in Love research. Your job is to gently ease their anxiety, get them comfortable opening up, and prepare them emotionally. Ask them one simple question at a time. Be brief, warm, and human. Never sound like a bot."
+});
 const express = require('express');
 const app = express();
 app.use(express.static(__dirname + '/..'));
+app.use(express.json());
+
+app.post("/ai-chat", async (req, res) => {      
+    const { message, sessionId } = req.body;
+
+    try {
+        if (!chatSessions[sessionId]) {
+            chatSessions[sessionId] = model.startChat({
+                history: []
+            });
+        }
+
+        const chat = chatSessions[sessionId];
+        const result = await chat.sendMessage(message);
+        const reply = result.response.text();
+
+        res.json({ reply });
+
+    } catch (error) {
+        console.error("Error generating AI response:", error);
+        res.status(500).json({ error: "Failed to generate AI response" });
+    }
+});
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require('socket.io');

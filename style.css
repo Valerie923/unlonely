@@ -118,3 +118,12 @@ button:hover {
     color: #1a1a2e;
     margin-bottom: 10px;
 }
+.aiMessages {
+    background-color: #e05f8e;
+    color: white;
+    align-self: flex-start;
+    border-radius: 20px;
+    padding: 10px 16px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
