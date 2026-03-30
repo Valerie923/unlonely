@@ -29,7 +29,7 @@ io.on("connection", (socket) => {
     };
     socket.on("message", (msg) => {
         const rooms = Array.from(socket.rooms).filter(r => r !== socket.id);
-        io.to(rooms[0]).emit("message", msg);
+        socket.to(rooms[0]).emit("message", msg);
     });
 
     socket.on("disconnect", () => {

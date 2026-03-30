@@ -9,6 +9,13 @@ socket.on("match", (message) => {
     console.log("Match update:" + message);
     alert("Match Found! You can start chatting now.")
 });
+socket.on("message", (msg) => {
+    const bubble = document.createElement("p")
+    bubble.classList.add("theirMessage")
+    bubble.innerText = msg
+    document.querySelector("#chatArea").appendChild(bubble)
+    document.getElementById("chatArea").scrollTop = document.getElementById("chatArea").scrollHeight
+})
 const questions = [
   [
     "Given the choice of anyone in the world, whom would you want as a dinner guest?",
@@ -98,6 +105,8 @@ function sendMessage(){
         document.querySelector("#chatArea").appendChild(msg)
         document.getElementById("chatArea").scrollTop = document.getElementById("chatArea").scrollHeight
         messageInput.value = ""
+        socket.emit("message", message)
+
     }
 }
 document.getElementById("sendBtn").addEventListener("click", sendMessage)
