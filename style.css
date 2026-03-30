@@ -118,12 +118,30 @@ button:hover {
     color: #1a1a2e;
     margin-bottom: 10px;
 }
-.aiMessages {
-    background-color: #e05f8e;
-    color: white;
-    align-self: flex-start;
-    border-radius: 20px;
-    padding: 10px 16px;
-    max-width: 70%;
-    word-wrap: break-word;
+#aiChatArea {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+    height: 350px;
+    overflow-y: auto;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.3);
+    margin-top: 16px;
+    margin-bottom: 10px;
+}
+
+#aiMessages {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+#aiInput {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: 24px;
+    border: none;
+    font-size: 1rem;
+    outline: none;
 }

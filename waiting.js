@@ -1,5 +1,5 @@
 const sessionId = Date.now().toString();
-
+const socket = io();
 function aiChatbox() {
     document.getElementById("aiChatArea").style.display = "block";
     const aiMsg = document.createElement("p");
@@ -7,6 +7,9 @@ function aiChatbox() {
     aiMsg.innerText = "Hey! Looks like you're waiting. What's on your mind today?";
     document.getElementById("aiMessages").appendChild(aiMsg);
 }
+socket.on("match", () => {
+    window.location.href = "chat.html"
+})
 
 
 document.getElementById("aiChatBtn").addEventListener("click", aiChatbox, { once: true });
